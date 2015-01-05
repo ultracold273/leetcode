@@ -8,19 +8,43 @@
 using namespace std;
 
 class Solution {
-	private:
-		bool EndMatch(const char *p) {
-			if (*p == '\0') return true;
-			if (*p == '.') {
-			}else{
-			}
-		}
 	public:
 		bool isMatch(const char *s, const char *p) {
-			if (*s == '\0') {
-				return EndMatch(p);
+			if (*p == '\0') {
+				return *s == '\0';
 			}
-
+			if (*(p + 1) != '*') {
+				if (*p != *s && *p != '.') return false;
+				else return isMatch(s + 1, p + 1);
+			}else{
+				if(*p != '.'){
+					char present = *p;
+					const char * ptr = p+2;
+					int leastlength = 0;
+					while(*ptr == present) {
+						// If encounter continues * pattern, jump
+						if (*(ptr+1) == '*') ptr += 2;
+						else leastlength++;
+					}
+					// Check whether there are enough present pattern
+					while(*s == present) {
+						s++;
+						leastlength--;
+					}
+					if (leastlength > 0) return false;
+					else{
+						p = ptr;
+						return isMatch(s, p);
+					}
+				}else{
+					// Matching '.*' pattern
+					if (*(p+2) == '\0') return true;
+					else {
+						char nextChar = * (p+2);
+						//
+					}
+				}
+			}
 			return false;
 		}
 };
