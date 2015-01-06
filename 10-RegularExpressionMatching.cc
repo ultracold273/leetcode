@@ -8,6 +8,14 @@
 using namespace std;
 
 class Solution {
+	private:
+		const char * findNextChar(const char * s, char nextChar) {
+			while(*s != nextChar) {
+				if (*s == '\0') return NULL;
+				s++;
+			}
+			return s;
+		}
 	public:
 		bool isMatch(const char *s, const char *p) {
 			if (*p == '\0') {
@@ -17,6 +25,11 @@ class Solution {
 				if (*p != *s && *p != '.') return false;
 				else return isMatch(s + 1, p + 1);
 			}else{
+				while((*p == '.' || *s == *p)) {
+					if (isMatch(s, p + 2)) return true;
+				}
+				return isMatch(s, p + 2);
+				/**
 				if(*p != '.'){
 					char present = *p;
 					const char * ptr = p+2;
@@ -24,7 +37,10 @@ class Solution {
 					while(*ptr == present) {
 						// If encounter continues * pattern, jump
 						if (*(ptr+1) == '*') ptr += 2;
-						else leastlength++;
+						else {
+							leastlength++;
+							ptr++;
+						}
 					}
 					// Check whether there are enough present pattern
 					while(*s == present) {
@@ -42,10 +58,18 @@ class Solution {
 					else {
 						char nextChar = * (p+2);
 						//
+						const char * foundNextChar = findNextChar(s, nextChar);
+						while(foundNextChar != NULL){
+							if (isMatch(foundNextChar, p + 2) == true)
+								return true;
+							else
+								foundNextChar = findNextChar(foundNextChar + 1, nextChar);
+						}
+						return false;
 					}
 				}
+				**/
 			}
-			return false;
 		}
 };
 
@@ -58,5 +82,6 @@ int main() {
 	cout << "\"aa\", \".*\": " << sol->isMatch("aa", ".*") << endl;
 	cout << "\"ab\", \".*\": " << sol->isMatch("ab", ".*") << endl;
 	cout << "\"aab\", \"c*a*b\": " << sol->isMatch("aab", "c*a*b") << endl;
+	cout << "\"aaa\", \"ab*a*c*a\": " << sol->isMatch("aaa", "ab*a*c*a") << endl; 
 	return 0;
 }
