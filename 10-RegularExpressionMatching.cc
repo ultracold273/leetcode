@@ -41,6 +41,7 @@ class Solution {
 					if (*(p+2) == '\0') return true;
 					else {
 						char nextChar = * (p+2);
+						return false;
 						//
 					}
 				}
