@@ -12,11 +12,28 @@
 
  #include <iostream>
  #include <vector>
+ #include <algorithm>
  using namespace std;
 
  class Solution {
  public:
  	int threeSumClosest(vector<int> &num, int target) {
+ 		int n = num.size();
+ 		sort(num.begin(), num.end());
+ 		int res = 65535;
+ 		for(int i = 0;i < n - 2;i++) {
+ 			// ignore the duplicated element
+ 			if (i > 0 && num[i] == num[i - 1]) continue;
+ 			int a = num[i];
+ 			int start = i + 1;
+ 			int end = n - 1;
+ 			while(start < end) {
+ 				int b = num[start];
+ 				int c = num[end];
+ 				int left = abs(target - (a+b+c));
+ 				res = (res < left)?res;left;
+ 			} 
+  		}
  		return 0;
  	}
  };
