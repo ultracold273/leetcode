@@ -21,6 +21,7 @@
  		int n = num.size();
  		sort(num.begin(), num.end());
  		int res = 65535;
+ 		int sum = 0;
  		for(int i = 0;i < n - 2;i++) {
  			// ignore the duplicated element
  			if (i > 0 && num[i] == num[i - 1]) continue;
@@ -30,11 +31,19 @@
  			while(start < end) {
  				int b = num[start];
  				int c = num[end];
- 				int left = abs(target - (a+b+c));
- 				res = (res < left)?res;left;
+ 				int left = target - (a+b+c);
+ 				res = (res < abs(left))?res:abs(left);
+ 				sum = (res < abs(left))?sum:a+b+c;
+ 				if (left > 0) {
+ 					while(start < n && num[start] == num[start + 1]) start++;
+ 					start++;
+ 				}else {
+ 					while(end > 0 && num[end] == num[end - 1]) end--;
+ 					end--;
+ 				}
  			} 
   		}
- 		return 0;
+ 		return sum;
  	}
  };
 
