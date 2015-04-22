@@ -22,5 +22,11 @@ class Solution {
 };
 
 int main(int argc, char * argv[]) {
+	Solution * sol = new Solution();
+	string s1("(()");
+	cout << sol->longestValidParentheses(s1) << endl;
+
+	string s2(")()())");
+	cout << sol->longestValidParentheses(s2) << endl;
 	return 0;
 }
