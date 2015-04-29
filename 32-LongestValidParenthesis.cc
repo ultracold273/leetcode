@@ -50,6 +50,11 @@ class Solution {
 								aTuple.push_back((*it)[0]);
 								aTuple.push_back((*it)[1] + i - lastPos + 1);
 								vecLength.push_back(aTuple);
+							}else{
+								vector<int> aTuple;
+								aTuple.push_back(lastPos);
+								aTuple.push_back(i - lastPos + 1);
+								vecLength.push_back(aTuple);
 							}
 						}
 					}else{
@@ -58,9 +63,11 @@ class Solution {
 				}
 			}
 			for (vector<vector<int> >::iterator it = vecLength.begin();it != vecLength.end();it++) {
+//				cout << (*it)[0] << ' ' << (*it)[1] << endl;
 				if((*it)[1] >= longestValid) {
 					longestValid = (*it)[1];
 				}
+//				cout << endl;
 			}
 			return longestValid;
 		}
@@ -85,5 +92,8 @@ int main(int argc, char * argv[]) {
 
 	string s6("(()()");
 	cout << sol->longestValidParentheses(s6) << endl;
+
+	string s7(")(())))(())())");
+	cout << sol->longestValidParentheses(s7) << endl;
 	return 0;
 }
