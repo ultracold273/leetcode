@@ -28,6 +28,5 @@ public:
             strSay.push_back(curDigit);
             return strSay;
         }
-        
     }
 };
