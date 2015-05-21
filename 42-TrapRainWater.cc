@@ -1,3 +1,4 @@
+
 /**
  * Given n non-negative integers representing an elevation map 
  * where the width of each bar is 1, 
@@ -10,6 +11,11 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
+/**
+ * 1. Find the highest bar
+ * 2. Start from the left to the right
+ */
 
 class Solution {
 public:
