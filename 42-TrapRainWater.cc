@@ -21,31 +21,29 @@ class Solution {
 public:
 	int trap(vector<int>& height) {
 		int totalRain = 0;
-		vector<int>::iterator it, st;
+		vector<int>::iterator it, highest;
 		// Find local maximum
+		highest = height.begin();
 		if (height.end() - height.begin() <= 2) return totalRain;
-		bool startFlag = false;
 		for(it = height.begin();it != height.end();it++) {
-			if (it == height.begin()) {
-				if (*it > *(it + 1)) {
-					st = it;
-					startFlag = true;
-				}
-			}else if(it == height.end() - 1) {
-				if (*(it - 1) < *it) {
-					if (startFlag)
-						totalRain += calulateRainDrop(st, it + 1);
-				}
-			}else{
-				if (*it > *(it + 1) && *it > *(it - 1)) {
-					if (startFlag) {
-						totalRain +=  calulateRainDrop(st, it + 1);
-						st = it;
-					}else{
-						st = it;
-						startFlag = true;
-					}
-				}
+			if (*it >= *highest) {
+				highest = it;
+			}
+		}
+
+		vector<int>::iterator prevHigh = height.begin();
+		for(it = height.begin();it != highest + 1;it++) {
+			if (*it >= *prevHigh) {
+				totalRain += calulateRainDrop(prevHigh, it + 1);
+				prevHigh = it;
+			}
+		}
+
+		prevHigh = height.end() - 1;
+		for(it = height.end() - 1;it != highest - 1;it--) {
+			if(*it >= *prevHigh) {
+				totalRain += calulateRainDrop(it, prevHigh + 1);
+				prevHigh = it;
 			}
 		}
 		return totalRain;
