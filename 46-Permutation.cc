@@ -11,6 +11,8 @@
 #include <algorithm>
 using namespace std;
 
+/* Modify a little from Problem 31. */
+
 class Solution {
 public:
     vector<vector<int> > permute(vector<int>& nums) {
@@ -19,7 +21,7 @@ public:
 		sort(numsPer.begin(), numsPer.end());
 		res.push_back(numsPer);
 		while(nextPermutation(numsPer)) {
-			res.push_back(nums);
+			res.push_back(numsPer);
 		}
 		return res;
     }
@@ -50,39 +52,38 @@ public:
 	}
 };
 
+void printMatrix(vector<vector<int> > &nums) {
+	cout << "[" << endl;
+	for (int i = 0; i < nums.size(); ++i) {
+		cout << "\t[ ";
+		for (int j = 0; j < nums[i].size(); ++j) {
+			cout << nums[i][j] << " ";
+		}	
+		cout << "]" << endl; 
+	}
+	cout << "]" << endl;
+}
+
 int main(int argc, char * argv[]) {
 	Solution * sol = new Solution();
 	int num1[] = {1, 3, 2};
 	vector<int> v(num1, num1 + 3);
-	sol->permute(v);
-	for(int i = 0;i < (int) v.size();i++) {
-		cout << v[i] << ", ";
-	}
-	cout << endl;
+	vector<vector<int> > vper = sol->permute(v);
+	printMatrix(vper);
+
 	int num2[] = {3, 2, 1};
 	vector<int> v1(num2, num2 + 3);
-	sol->permute(v1);
-	for(int i = 0;i < (int) v1.size();i++) {
-		cout << v1[i] << ", ";
-	}
-	cout << endl;
-
+	vector<vector<int> > v1per = sol->permute(v1);
+	printMatrix(v1per);
+	
 	int num3[] = {1, 1, 5};
 	vector<int> v2(num3, num3 + 3);
-	sol->permute(v2);
-	for(int i = 0;i < (int) v2.size();i++) {
-		cout << v2[i] << ", ";
-	}
-	cout << endl;
-
+	vector<vector<int> > v2per = sol->permute(v2);
+	printMatrix(v2per);
+	
 	int num4[] = {1, 1, 3, 4};
 	vector<int> v3(num4, num4 + 4);
-	for(int j = 0;j < 13;j++) {
-		sol->permute(v3);
-		for(int i = 0;i < (int) v3.size();i++) {
-			cout << v3[i] << ", ";
-		}
-		cout << endl;
-	}
+	vector<vector<int> > v3per = sol->permute(v3);
+	printMatrix(v3per);
 	return 0;
 }
