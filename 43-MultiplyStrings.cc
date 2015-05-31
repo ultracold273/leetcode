@@ -83,7 +83,7 @@ public:
 
 int main(int argc, char * argv[]) {
 	Solution * sol = new Solution();
-	cout << sol->multiply("1789", "0") << endl;
-	cout << "real answer: " << 1789 * 0 << endl;
+	cout << sol->multiply("17892312432545", "321234324") << endl;
+//	cout << "real answer: " << 1789 * 0 << endl;
 	return 0;
 }
