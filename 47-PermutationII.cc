@@ -1,9 +1,10 @@
 /**
- * Given a collection of numbers, return all possible permutations.
+ * Given a collection of numbers that may contain duplicates, 
+ * return all possible unique permutations.
  *
  * For example,
- * [1,2,3] have the following permutations:
- * [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1]. 
+ * [1,1,2] have the following permutations:
+ * [1,1,2], [1,2,1]  and [2,1,1]
  */
 
 #include <iostream>
@@ -12,10 +13,11 @@
 using namespace std;
 
 /* Modify a little from Problem 31. */
+/* The same as Problem 46 */
 
 class Solution {
 public:
-    vector<vector<int> > permute(vector<int>& nums) {
+    vector<vector<int> > permuteUnique(vector<int>& nums) {
 		vector<int> numsPer (nums);
 		vector<vector<int> > res;
 		sort(numsPer.begin(), numsPer.end());
