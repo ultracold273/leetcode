@@ -35,21 +35,59 @@ class Solution {
 public:
 	int findPosition(vector<Interval>& intervals, int num) {
 		int left = 0;
-		int right = intervals.size() - 1;
-		while(left < right) {
+		int right = intervals.size();
+		while(left < right - 1) {
 			if (intervals[(left + right)/2].start > num) {
 				right = (left + right)/2;
 			}else{
 				left = (left + right)/2;
 			}
 		}
-		return right - 1;
+		if (num < intervals[left].start) return left - 1;
+		else return left;
 	}
 
 	vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+		vector<Interval> ret;
+		if (intervals.size() == 0) {
+			ret.push_back(newInterval);
+			return ret;
+		}
 		int stPos = findPosition(intervals, newInterval.start);
 		int edPos = findPosition(intervals, newInterval.end);
-		vector<Interval> ret;
+		cout << stPos << " " << edPos << endl;
+		int i = 0;
+		if (stPos == -1) {
+			if (intervals[edPos].end > newInterval.end) {
+				ret.push_back(Interval(newInterval.start, intervals[edPos].end));
+			}else {
+				ret.push_back(Interval(newInterval.start, newInterval.end));
+			}
+			i = edPos + 1;
+		}
+		while(i < intervals.size()) {
+			if(i == stPos) {
+				if (intervals[stPos].end < newInterval.start) {
+					ret.push_back(intervals[i]);
+					if (intervals[edPos].end > newInterval.end) {
+						ret.push_back(Interval(newInterval.start, intervals[edPos].end));
+					}else {
+						ret.push_back(Interval(newInterval.start, newInterval.end));
+					}
+				}else{
+					if (intervals[edPos].end > newInterval.end) {
+						ret.push_back(Interval(intervals[stPos].start, intervals[edPos].end));
+					}else {
+						ret.push_back(Interval(intervals[stPos].start, newInterval.end));
+					}
+				}
+				
+				i = edPos + 1;
+			}
+			if (i >= intervals.size()) break;
+			ret.push_back(intervals[i]);
+			i++;
+		}
 		return ret;
 	}
 };
