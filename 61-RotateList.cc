@@ -22,30 +22,23 @@ struct ListNode {
 class Solution {
 public:
 	ListNode * rotateRight(ListNode * head, int k) {
-		int count = 0;
-		ListNode * ptrEd = head;
-		ListNode * ptrNewEd = head;
+		int count = 1;
 		if(head == NULL || head->next == NULL || k == 0) return head;
-		while(ptrEd->next != NULL) count++;
-		ptrEd = head;
-		int eq_count = k % (count + 1);
-		bool endFlag = false;
+		ListNode * ptrEd = head;
 		while(ptrEd->next != NULL) {
-			if (endFlag) ptrNewEd = ptrNewEd->next;
-			if (eq_count > 0) {
-				count--;
-			}else{
-				endFlag = true;
-			}
-			ptrEd = ptrEd->next;			
+			ptrEd = ptrEd->next;
+			count++;
+		}
+		ptrEd->next = head;
+		k = count - k % count;
+		for (int i = 0;i < k;i++) {
+			ptrEd = ptrEd->next;
 		}
 
-		if (ptrNewEd->next == NULL)
-			return head;
-		ptrEd->next = head;
-		ptrEd = ptrNewEd->next;
-		ptrNewEd->next = NULL;
-		return ptrEd;
+		head = ptrEd->next;
+		ptrEd->next = NULL;
+
+		return head;
 	}
 };
 
