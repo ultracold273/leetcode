@@ -41,34 +41,10 @@ public:
 			}
 		}
 
-		// Dict storing the position of every char
-		unordered_map<char, vector<int> > dictSpos;
-		for (int i = 0;i < (int) s.size();i++) {
-			if (dictTNum.find(s[i]) != dictTNum.end()) {
-				if (dictTNum[s[i]] != 0) {
-					if (dictSpos.find(s[i]) != dictSpos.end()) {
-						dictSpos[s[i]].push_back(i);
-					}else{
-						dictSpos[s[i]] = vector<int>(1, i);
-					}
-				}else{
-					// the number shall be in multiple times
-					dictSpos[s[i]].erase(dictSpos[s[i]].begin());
-					dictSpos[s[i]].push_back(i);
-				}
-			}
+		int start = 0, end = 0;
+		while(end < (int) s.size()) {
+			if ()
 		}
-
-		unordered_map<char, int>::iterator it;
-		for (it = dictTNum.begin();it != dictTNum.end();it++) {
-			if (it->second != 0) return "";
-		}
-		unordered_map<char, vector<int> >::iterator it_v;
-		int st = -1;
-		int ed = s.size();
-		for (it_v = dictSpos.begin();it_v != dictSpos.end();it++) {
-			vector<int> temp = it_v->second;
-			if ((*(temp.begin())) >
-		}
+		return "";
 	}
 }
