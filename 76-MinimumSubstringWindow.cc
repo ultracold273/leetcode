@@ -16,35 +16,60 @@
  * there will always be only one unique minimum window in S.
  */
 
- /* keep a dictionary of t
-  * keep a queue of anchor index stores the char that matches with t in s
-  * if an extra char is matched and it is the same with first anchor char
-  * pop to next anchor index
+ /* 
+  * First find a range that contains all the characters in it
+  * then shrink the starting point until there are all 
   */
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <unordered_map>
 using namespace std;
-
 class Solution {
 public:
-	string minWindow(string s, string t) {
-		// Pre-processing
-		unordered_map<char, int> dictTNum;
-		for (int i = 0;i < (int) t.size();i++) {
-			if (dictTNum.find(t[i]) != dictTNum.end()) {
-				dictTNum[t[i]] += 1;
-			}else {
-				dictTNum[t[i]] = 1;
-			}
-		}
+    string minWindow(string s, string t) {
+        if (t.empty())
+            return "";
+        int t_map[256] = {0}, s_map[256] = {0};
+        int t_size = 0;
 
-		int start = 0, end = 0;
-		while(end < (int) s.size()) {
-			if ()
-		}
-		return "";
-	}
+        for (auto c : t)
+        {
+            if (t_map[c] == 0)
+                t_size ++;
+            t_map[c] ++;
+        }
+        int start = 0, end = 0, found = 0, min_start = 0, min_end = s.size() + 1;
+        while (start <= end && end <= s.size())
+        {
+            if (found < t_size)
+            {
+                end ++;
+                char c = s [end - 1];
+                if (t_map[c] > 0 && ++s_map[c]  ==  t_map[c])
+                {
+                    found ++;
+                }
+            }else {
+                start ++;
+                char c = s [start - 1];
+                if (t_map[c] > 0 && s_map[c]--  ==  t_map[c])
+                {
+                    found --;
+                }
+            }
+            if (found == t_size && end - start < min_end - min_start)
+            {
+                min_start = start;
+                min_end = end;
+            }
+        }
+        if (min_end == s.size() + 1)
+            return "";
+        return s.substr(min_start, min_end - min_start);
+    }
+};
+int main(int argc, char const *argv[])
+{
+	Solution * sol = new Solution();
+	return 0;
 }
