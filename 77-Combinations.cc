@@ -22,24 +22,53 @@ using namespace std;
 
 class Solution {
 public:
-	vector<vector<int> > combine_rec(vector<int>& all, int size, int k) {
-		vector<vector<int> > resVec(0);
-		if (size < k) {
-			return resVec;
-		} else if (size == k) {
-			return resVec.push_back(new vector<int>(all.begin(), all.begin() + size));
-		} else {
-			if (k == 1) {
-			}else {
+	vector<vector<int> > combine_rec(int n, int k) {
+		vector<vector<int> > res;
+		if (n < 1 || n < k) {
+			res.push_back(vector<int>(0));
+		}else if (n == 1) {
+			res.push_back(vector<int>(1, 1));
+		}
+		else if (k == 1) {
+			for (int i = 1;i <= n;i++) {
+				res.push_back(vector<int>(1, i));
+			}
+		}else {
+			vector<vector<int> > part1 = combine_rec(n - 1, k);
+			vector<vector<int> > part2 = combine_rec(n - 1, k - 1);
+			for(vector<vector<int> >::iterator it = part2.begin(); it != part2.end(); ++it) {
+				it->push_back(n);
+			}
+
+			for(vector<vector<int> >::iterator it = part1.begin(); it != part1.end(); ++it) {
+				if (it->size() != 0)
+					res.push_back(*it);
+			}
+			for(vector<vector<int> >::iterator it = part2.begin(); it != part2.end(); ++it) {
+				res.push_back(*it);
 			}
 		}
+		return res;
 	}
 
 	vector<vector<int> > combine(int n, int k) {
-		vector<int> all(n);
-		for (int i = 0;i < n;) {
-			all[i] = i + 1;
-		}
-		return combine_rec(all, n, k);
+		if (n < 1 || n < k || k < 1) return vector<vector<int> >(0);
+		return combine_rec(n, k);
 	}
 };
+
+int main(int argc, char * argv[]) {
+	Solution * sol = new Solution();
+	vector<vector<int> > combinator;
+	combinator = sol->combine(4, 0);
+	cout << "\t[" << endl;
+	for (int i = 0;i < (int) combinator.size();i++) {
+		cout << "\t\t[";
+		for(int j = 0;j < (int) combinator[i].size();j++) {
+			cout << combinator[i][j] << ", ";
+		}
+		cout << "]," << endl;
+	}
+	cout << "\t]" << endl;
+}
+
