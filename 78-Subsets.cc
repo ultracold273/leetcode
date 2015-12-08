@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 void printVectorArgs(vector<vector<int> >& in);
@@ -46,6 +47,7 @@ public:
 //				vector<int> copy(*it);
 				vector<int> copy(res[i]);
 				copy.push_back(nums[nums.size()-1]);
+				sort(copy.begin(), copy.end());
 				res.push_back(copy);
 			}
 		}
