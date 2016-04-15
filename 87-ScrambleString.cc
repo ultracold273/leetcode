@@ -50,15 +50,25 @@
  class Solution {
  public:
      bool isScramble(string s1, string s2) {
-         int s1len = s1.size();
-         int s2len = s2.size();
-         assert(s1len == s2len);
-         if (s1len == 1) {
-             return s1 == s2;
-         }else{
-             
-         }
-     }
+		string s1_srt = s1;
+		string s2_srt = s2;
+		sort(s1_srt.begin(), s1_srt.end());
+		sort(s2_srt.begin(), s2_srt.end());
+		int str_len = s1.size();
+		if (s1_srt != s2_srt) {
+			return false;
+		}else if (str_len == 1) {
+			return s1 == s2;
+		}else{
+			for (int i = 1; i < str_len; i++) {
+				// Check the same sequence
+				if (isScramble(s1.substr(0, i), s2.substr(0, i)) && isScramble(s1.substr(i, str_len - i), s2.substr(i, str_len - i))) return true;
+				// Check the opposite
+				if (isScramble(s1.substr(0, i), s2.substr(str_len - i, i)) && isScramble(s1.substr(i, str_len - i), s2.substr(0, str_len - i))) return true;
+			}
+			return false;
+		}
+	}
  };
  
  int main() {
