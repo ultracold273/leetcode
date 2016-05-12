@@ -25,10 +25,44 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseBetween(ListNode *head, int m, int n) {
-        return head;
+        ListNode dummy(0);
+        ListNode * rpNode = &dummy;
+        int m_p = m;
+        ListNode * tailNode;
+        ListNode * curNode, * nextNode;
+        dummy.next = head;
+        // Search for the previous node of reversed list
+        while(--m) {
+            rpNode = rpNode->next;
+        }
+        // Inverse
+        tailNode = rpNode->next;
+        if (tailNode == NULL) return head;
+        curNode = tailNode;
+        nextNode = curNode->next;
+        while((n--) > m_p) {
+            ListNode * temp = nextNode->next;
+            nextNode->next = curNode;
+            curNode = nextNode;
+            nextNode = temp;
+        }
+        // Finalize
+        tailNode->next = nextNode;
+        rpNode->next = curNode;
+        return dummy.next;
     }
 };
 
 int main(int argc, char * argv[]) {
+    ListNode a(3), b(5);
+    a.next = &b;
+    Solution *sol = new Solution();
+    ListNode * node = sol->reverseBetween(&a, 1, 2);
+    
+    while(node) {
+        cout << node->val << ' ';
+        node = node->next;
+    }
+    cout << endl;
     return 0;
 }

@@ -22,6 +22,10 @@
 #include <string>
 using namespace std;
 
+/*
+ * This solution utilize dynamic programming， search from back of the
+ * string.
+ */
 class Solution {
 public:
     int numDecodings(string s) {
