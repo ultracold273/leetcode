@@ -30,10 +30,8 @@ struct TreeNode {
 class Solution {
 public:
 	vector<TreeNode *> generateTrees(int n) {
-		if (n == 0) return vector<TreeNode *>();
 		vector<TreeNode *> res;
-        res.push_back(TreeNode(1));
-        vector<TreeNode *> temp;
+		if (n == 0) return res;
         for (int i = 2;i <= n;i++) {
             
         }
