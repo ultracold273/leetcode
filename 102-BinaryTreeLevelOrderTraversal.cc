@@ -56,7 +56,7 @@ public:
                 res.push_back(*levelVal);
                 temp = qLevel;
                 qLevel = qNextLevel;
-                qNextLevel = qLevel;
+                qNextLevel = temp;
                 delete levelVal;
                 levelVal = new vector<int>();
             }
