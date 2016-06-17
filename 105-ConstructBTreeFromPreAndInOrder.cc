@@ -12,6 +12,17 @@
 using namespace std;
 
 /**
+ * Preorder Traversal: Recursively defined visit root, leftTree, rightTree
+ * Inorder Traversal: Recursively defined visit leftTree, root, rightTree
+ * The first element in preorder is the root of all node, find the same
+ * one in inorder, suppose it is in i-th position. Then all elements from
+ * position 0 to i-1 shall be in the left tree. All elements from i+1 to 
+ * the final shall be in the right tree. We can build the tree in a 
+ * recursive way.
+ */
+
+
+/**
  * Definition for a binary tree node
  */
 struct TreeNode {

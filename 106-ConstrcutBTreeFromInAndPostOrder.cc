@@ -14,6 +14,14 @@
 using namespace std;
 
 /**
+ * Similar to Q105, just notice the difference between preorder and
+ * postorder.
+ * Postorder Traversal: first leftTree, rightTree, root
+ * The last element in postorder is the root of all nodes.
+ * The last but one element is the root of rightTree, etc.
+ */
+
+/**
  * Definition for a binary tree node
  */
 struct TreeNode {
