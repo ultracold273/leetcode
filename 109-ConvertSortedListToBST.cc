@@ -30,5 +30,20 @@ struct TreeNode {
 class Solution {
 public:
     TreeNode* sortedListToBST(ListNode* head) {
+		int size = 0;
+		ListNode * ptr = head;
+		int pos;
+		while(ptr != NULL) {size++;ptr = ptr->next;}
+		if (size == 0) return NULL;
+		else if (size % 2 == 1) pos = size / 2 + 1;
+		else pos = size / 2;
+		ptr = head;
+		while(--pos > 0) {ptr = ptr->next;}
+		TreeNode * root = new TreeNode(ptr->val);
+		TreeNode * rightTree = sortedListToBST(ptr->next);
+		TreeNode * leftTree = sortedListToBST(head);
+		root->left = leftTree;
+		root->right = rightTree;
+		return root;
     }
 };
