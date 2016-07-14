@@ -43,16 +43,39 @@ struct TreeLinkNode {
 
 class Solution {
 public:
+	TreeLinkNode * findLeftNodeInNextLevel(TreeLinkNode * inNode) {
+		while(inNode != NULL && inNode->left == NULL && inNode->right == NULL) {
+			inNode = inNode->next;
+		}
+		return (inNode == NULL)?NULL:((inNode->left != NULL)?inNode->left:inNode->right);
+	}
+
+	TreeLinkNode * findRightNodeInNextLevel(TreeLinkNode * leftHead) {
+		if (leftHead == NULL) return NULL;
+		while(leftHead->next != NULL) leftHead = leftHead->next;
+		return leftHead;
+	}
+
+	TreeLinkNode * findNextLeftHeadInNextLevel(TreeLinkNode * leftHead) {
+		while(leftHead != NULL && leftHead->left == NULL && leftHead->right == NULL) {
+			leftHead = leftHead->next;
+		}
+		return (leftHead == NULL)?NULL:((leftHead->left != NULL)?leftHead->left:leftHead->right);
+	}
+
     void connect(TreeLinkNode *root) {
 		if (root == NULL) return;
 		connect(root->left);
 		connect(root->right);
 		TreeLinkNode * rightAtLeft = root->left;
+		TreeLinkNode * leftHead = root->left;
 		TreeLinkNode * leftAtRight = root->right;
 		while(rightAtLeft != NULL) {
 			rightAtLeft->next = leftAtRight;
-			rightAtLeft = rightAtLeft->right;
-			leftAtRight = leftAtRight->left;
+			leftHead = findLeftNodeInNextLevel(leftHead);
+//			rightAtLeft = rightAtLeft->right;
+			rightAtLeft = findRightNodeInNextLevel(leftHead);
+			leftAtRight = findLeftNodeInNextLevel(leftAtRight);
 		}
     }
 };
