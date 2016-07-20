@@ -63,7 +63,7 @@ public:
 		return (leftHead == NULL)?NULL:((leftHead->left != NULL)?leftHead->left:leftHead->right);
 	}
 
-    void connect(TreeLinkNode *root) {
+    void connect_old(TreeLinkNode *root) {
 		if (root == NULL) return;
 		connect(root->left);
 		connect(root->right);
@@ -77,5 +77,35 @@ public:
 			rightAtLeft = findRightNodeInNextLevel(leftHead);
 			leftAtRight = findLeftNodeInNextLevel(leftAtRight);
 		}
+    }
+
+    /* a level-by-level solution 
+     * First connect all next via next solution
+     */
+    void connect(TreeLinkNode *root) {
+        while(!root) {
+            TreeLinkNode * p = root;
+            /* Connect one level */
+            while(p) {
+                if (p->left && p->right) {
+                    p->left->next = p->right;
+                    p->right->next = getNext(p->next);
+                }else if (p->left) {
+                    p->left->next = getNext(p->next);
+                }else if (p->right) {
+                    p->right->next = getNext(p->next);
+                }
+                p = p->next;
+            }
+            root = getNext(root);
+        }
+        return;
+    }
+
+    TreeLinkNode * getNext(TreeLinkNode * root) {
+        while(root && !root->left && !root->right) {
+            root = root->next;
+        }
+        return (root ? (root->left ? root->left : root->right) : NULL);
     }
 };
