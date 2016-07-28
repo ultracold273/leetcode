@@ -47,7 +47,7 @@ public:
         int * seqMin = NULL;
         int i;
         if (prices.size() < 2) return 0;
-        for(i = 0;i < prices.size() - 1;i++) {
+        for(i = 0;i < (int) prices.size() - 1;i++) {
             if (prices[i] <= prices[i + 1]) {
                 if (seqMin == NULL) seqMin = &prices[i];
             }else {
