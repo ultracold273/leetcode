@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include <climits>
 using namespace std;
 
 /**
@@ -37,42 +38,70 @@ struct TreeNode {
 
 class Solution {
 public:
-	int max(int a, int b, int c) {
-		if (a > b) {
-			return (a > c)?a:c;
-		}else{
-			return (b > c)?b:c;
-		}
-	}
+    bool isLeaf(TreeNode * node) {
+        return (node != NULL) && (node->left == NULL) && (node->right == NULL);
+    }
+    
+    int maxPathSumThrough(TreeNode * node, int * maxSum) {
+        if (isLeaf(node)) {
+            if (node->val > *maxSum) 
+                *maxSum = node->val;
+            return node->val;
+        }else if ((node->left != NULL) && (node->right != NULL)) {
+            int leftMax = maxPathSumThrough(node->left, maxSum);
+            int rightMax = maxPathSumThrough(node->right, maxSum);
+            int pSumAll = leftMax + rightMax + node->val;
+            int pSumLeft = leftMax + node->val;
+            int pSumRight = rightMax + node->val;
+            int pSumNode = node->val;
 
-	void maxPathSum_rec(TreeNode * root, int * inTree, int * thrTree) {
-		int leftInT, leftThrT;
-		int rightInT, rightThrT;
-		if (root == NULL) {
-			*inTree = 0;
-			*thrTree = 0;
-			return;
-		}
-		cout << "root->val: " << root->val << endl;
-		maxPathSum_rec(root->left, &leftInT, &leftThrT);
-		maxPathSum_rec(root->right, &rightInT, &rightThrT);
-		*inTree = max(leftInT, rightInT, leftThrT + rightThrT + root->val);
-		*thrTree = (leftThrT > rightThrT)?leftThrT:rightThrT + root->val;
-	}
+            int maxThree;
+            // Get Max from pSumLeft, pSumRight and pSumNode
+            if (pSumLeft > pSumRight)
+                maxThree = (pSumNode > pSumLeft)?pSumNode:pSumLeft;
+            else
+                maxThree = (pSumNode > pSumRight)?pSumNode:pSumRight;
+            int maxFour;
+            // Get max among the four
+            maxFour = (maxThree > pSumAll)?maxThree:pSumAll;
+
+            if (maxFour > *maxSum)
+                *maxSum = maxFour;
+            return maxThree;
+        }else {
+            if (node->left != NULL) {
+                int leftMax = maxPathSumThrough(node->left, maxSum);
+                int maxPath = (leftMax > 0)?(leftMax + node->val):node->val;
+                if (maxPath > *maxSum) {
+                    *maxSum = maxPath;
+                }
+                return maxPath;
+            } else {
+                int rightMax = maxPathSumThrough(node->right, maxSum);
+                int maxPath = (rightMax > 0)?(rightMax + node->val):node->val;
+                if (maxPath > *maxSum) {
+                    *maxSum = maxPath;
+                }
+                return maxPath;
+            }
+        }
+    }
 
     int maxPathSum(TreeNode* root) {
-		int inTree, thrTree;
-		maxPathSum_rec(root, &inTree, &thrTree);
-		return inTree;
+        int res = INT_MIN;
+        if (root == NULL) return 0;
+        int throughRoot = maxPathSumThrough(root, &res);
+        if (res > throughRoot)
+            return res;
+        else 
+            return throughRoot;
     }
 };
 
 int main() {
-	Solution * sol = new Solution();
-	TreeNode r(1);
-	TreeNode a(2);
-	TreeNode b(3);
-	r.left = &a;r.right = &b;
-	cout << sol->maxPathSum(&r) << endl;
-	return 0;
+    TreeNode a(-1), b(2);
+    b.left = &a;
+    Solution *sol = new Solution();
+    cout << sol->maxPathSum(&b) << endl;
+    return 0;
 }

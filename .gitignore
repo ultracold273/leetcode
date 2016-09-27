@@ -27,5 +27,8 @@
 *.out
 *.app
 
+*
+!*.cc
+
 .vscode/*
 browse.VC.db
