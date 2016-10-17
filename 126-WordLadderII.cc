@@ -29,14 +29,20 @@
  *
  */
 
-/*
- * One of the tricky things about the problem is 
- */
-
 #include <iostream>
 #include <vector>
 #include <unordered_set>
 using namespace std;
+
+class Vertex {
+public:
+    string word;
+    vector<Vertex *> edges;
+
+    Vertex(string name) {
+        this->word = name;
+    }
+};
 
 class Solution {
 public: 
@@ -50,6 +56,11 @@ public:
 
     vector<vector<string> > findLadders(string beginWord, string endWord, unordered_set<string> &wordList) {
         vector<vector<string> > res;
+        // First build a graph starting from beginWord
+        Vertex * ver_begin = new Vertex(beginWord);
+        for (auto it = wordList.begin(); it != wordList.end(); ++it) {
+            if (1 == getEditDistanceSimple())
+        }
         return res;
     } 
 };
