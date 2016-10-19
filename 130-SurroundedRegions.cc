@@ -25,6 +25,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 
 class Solution {
@@ -32,6 +33,8 @@ public:
     void solve_rec(vector<vector<char>>& board, int i, int j) {
         int rows = board.size();
         int cols = board[0].size();
+        /* //Recursion does not work on leetcode online judge
+        // Possibly bug in their system on program stack
         board[i][j] = 'E';
         if (i != 0 && board[i-1][j] == 'O') {
             solve_rec(board, i - 1, j);
@@ -44,6 +47,28 @@ public:
         }
         if (j != 0 && board[i][j-1] == 'O') {
             solve_rec(board, i, j - 1);
+        }
+        */
+        // BFS + stack implementation
+        stack<int> st;
+        st.push(i * cols + j);
+        while(!st.empty()) {
+            int col = st.top() % cols;
+            int row = st.top() / cols;
+            board[row][col] = 'E';
+            st.pop();
+            if (row != 0 && board[row-1][col] == 'O') {
+                st.push((row-1) * cols + col);
+            }
+            if (row != rows - 1 && board[row+1][col] == 'O') {
+                st.push((row + 1) * cols + col);
+            }
+            if (col != cols - 1 && board[row][col+1] == 'O') {
+                st.push(row * cols + col + 1);
+            }
+            if (col != 0 && board[row][col-1] == 'O') {
+                st.push(row * cols + col - 1);
+            }
         }
     }
 
