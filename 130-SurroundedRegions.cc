@@ -29,7 +29,68 @@ using namespace std;
 
 class Solution {
 public:
+    void solve_rec(vector<vector<char>>& board, int i, int j) {
+        int rows = board.size();
+        int cols = board[0].size();
+        board[i][j] = 'E';
+        if (i != 0 && board[i-1][j] == 'O') {
+            solve_rec(board, i - 1, j);
+        }
+        if (i != rows - 1 && board[i+1][j] == 'O') {
+            solve_rec(board, i + 1, j);
+        }
+        if (j != cols - 1 && board[i][j+1] == 'O') {
+            solve_rec(board, i, j + 1);
+        }
+        if (j != 0 && board[i][j-1] == 'O') {
+            solve_rec(board, i, j - 1);
+        }
+    }
+
     void solve(vector<vector<char>>& board) {
+        int rows = board.size();
+        int cols = board[0].size();
+        // Update Cells connecting with 'O's in first Row and last row
+        for(int j = 0;j < cols;++j) {
+            if (board[0][j] == 'O') {
+                solve_rec(board, 0, j);
+            }
+            if (board[rows - 1][j] == 'O') {
+                solve_rec(board, rows - 1, j);
+            }
+        }
+        // Update Cells connecting with 'O's in first Col and last col
+        for(int i = 1;i < rows - 1;++i) {
+            if (board[i][0] == 'O') {
+                solve_rec(board, i, 0);
+            }
+            if (board[i][cols - 1] == 'O') {
+                solve_rec(board, i, cols - 1);
+            }
+        }
+
+        for (int i = 0;i < rows;++i) {
+            for (int j = 0;j < cols;++j) {
+                if (board[i][j] == 'O') board[i][j] = 'X';
+                else if (board[i][j] == 'E') board[i][j] = 'O';
+            }
+        }
 
     }
 };
+
+int main() {
+    Solution * sol = new Solution();
+    vector<vector<char>> board(4, vector<char>(4, 'X'));
+    board[1][1] = 'O';
+    board[1][2] = 'O';
+    board[2][2] = 'O';
+    board[3][1] = 'O';
+    sol->solve(board);
+    for (int i = 0;i < board.size();++i) {
+        for (int j = 0;j < board[0].size();++j) {
+            cout << board[i][j] << ' ' ;
+        }
+        cout << endl;
+    }
+}
