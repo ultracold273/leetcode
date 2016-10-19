@@ -54,13 +54,31 @@ public:
         return editDist;
     }
 
+	void connectGraph(Vertex &begin, Vertex &end, vector<Vertex *> &wordVertexes) {
+		bool anyDisOne = false;
+		if (1 == getEditDistanceSimple(begin.word, end.word)) {
+			begin.edges.push_back(&end);
+			return;
+		}
+		vector<Vertex *> cur;
+		cur.push_back(&begin);
+		do {
+			for (auto it = wordVertexes.begin(); it != wordVertexes.end(); ++it) {
+			}
+		}while(anyDisOne && wordVertexes.size() != 0);
+	}
+
     vector<vector<string> > findLadders(string beginWord, string endWord, unordered_set<string> &wordList) {
         vector<vector<string> > res;
         // First build a graph starting from beginWord
         Vertex * ver_begin = new Vertex(beginWord);
+		Vertex * ver_end = new Vertex(endWord);
+		vector<Vertex *> wordVertexes;
         for (auto it = wordList.begin(); it != wordList.end(); ++it) {
-            if (1 == getEditDistanceSimple())
+			Vertex * graph_ver = new Vertex(*it);
+			wordVertexes.push_back(graph_ver);
         }
+		connectGraph(*ver_begin, *ver_end, wordVertexes);
         return res;
     } 
 };
