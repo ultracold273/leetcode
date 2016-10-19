@@ -49,6 +49,7 @@ public:
 
     void solve(vector<vector<char>>& board) {
         int rows = board.size();
+        if (rows == 0) return;
         int cols = board[0].size();
         // Update Cells connecting with 'O's in first Row and last row
         for(int j = 0;j < cols;++j) {
@@ -81,11 +82,13 @@ public:
 
 int main() {
     Solution * sol = new Solution();
-    vector<vector<char>> board(4, vector<char>(4, 'X'));
-    board[1][1] = 'O';
-    board[1][2] = 'O';
-    board[2][2] = 'O';
-    board[3][1] = 'O';
+    vector<vector<char>> board(250, vector<char>(250, 'X'));
+    for (int j = 0;j < 250;++j){
+        if (j % 2 == 0) 
+            for (int i = 0;i < 250;i++) board[j][i] = 'O';
+        else if (j % 4 == 1) board[j][249] = 'O';
+        else board[j][0] = 'O';
+    }
     sol->solve(board);
     for (int i = 0;i < board.size();++i) {
         for (int j = 0;j < board[0].size();++j) {
