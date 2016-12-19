@@ -57,7 +57,7 @@ public:
                 temp = split[i];
                 while(curPos >= 0 && 2 * i - curPos < (int)(split.size())&& split[curPos] == split[2 * i - curPos]) {
                     temp = split[curPos] + temp + split[2 * i - curPos];
-                    res.push_back(constructNewSubStr(split, temp, curPos, 2 * i + 1 - curPos));
+                    res.push_back(constructNewSubStr(split, temp, curPos, 2 * i - curPos));
                     curPos--;
                 }
             }
@@ -68,7 +68,7 @@ public:
 
 int main() {
     Solution * sol = new Solution();
-    vector<vector<string>> res = sol->partition("aacbb");
+    vector<vector<string>> res = sol->partition("efe");
     cout << "[" << endl;
     for(int i = 0;i < (int)res.size();i++) {
         for (int j = 0;j < (int)res[i].size();j++) {
