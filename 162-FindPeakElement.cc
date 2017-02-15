@@ -20,13 +20,21 @@
 #include <vector>
 using namespace std;
 
+/**
+ * Primary Solution: Peak value has a gradient of 0
+ * Gradient is conitunuous, if the starting is mono increase and the mid
+ * is mono-decrease, there must exist a peak between them. Vice versa for
+ * mid and ending comparison.
+ * So that we can do binary search to achieve logrithmatic complexity.
+ */
+
 class Solution {
 public:
     int gradientFinder(vector<int>&nums, int idx) {
         /* 0 -- Peak, 1 -- Mono Increase, 2 -- Mono Decrease, 3 -- Valley */
         if (idx == 0) {
             return 1;
-        }else if (idx == nums.size() - 1) {
+        }else if (idx == (int)nums.size() - 1) {
             return 2;
         }else {
             bool before = (nums[idx] > nums[idx - 1]);
